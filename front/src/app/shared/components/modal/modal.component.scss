@@ -1,0 +1,34 @@
+:host {
+  display: block;
+}
+
+.modal__title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-color, #333);
+}
+
+.modal__content {
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: var(--secondary);
+  color: var(--text-color, #333);
+  margin-bottom: 1rem;
+}
+
+.modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.modal__button {
+  &--cancel {
+    border: 1.5px solid var(--gray);
+  }
+
+  &--confirm {
+    background-color: var(--secondary);
+  }
+}

@@ -1,0 +1,17 @@
+<div class="date-picker"> <label [for]="inputId" class="date-picker__label"> {{ title }} </label> <input [id]="inputId"
+    type="date" class="date-picker__input"
+    [class.date-picker__input--invalid]="dateControl.touched && dateControl.invalid" [attr.placeholder]="placeholder"
+    [min]="minDate" [max]="maxDate" [formControl]="dateControl"
+    [attr.aria-invalid]="dateControl.touched && dateControl.invalid"
+    [attr.aria-describedby]="dateControl.invalid ? inputId + '-error' : null" />
+  <ng-template #errorBlock>
+    <div [id]="inputId + '-error'" class="date-picker__error" role="alert">
+      <ng-container *ngIf="dateControl.errors?.['required']"> <span>Data é obrigatória.</span> </ng-container>
+      <ng-container *ngIf="dateControl.errors?.['outOfRange']"> <span> Data deve estar entre {{ minDate }} e
+          {{ maxDate }}. </span> </ng-container>
+    </div>
+  </ng-template>
+  <ng-container *ngIf="dateControl.touched && dateControl.invalid">
+    <ng-container [ngTemplateOutlet]="errorBlock"></ng-container>
+  </ng-container>
+</div>

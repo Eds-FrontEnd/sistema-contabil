@@ -1,0 +1,168 @@
+.smart-input {
+  width: 100%;
+  margin: 24px auto;
+
+  &__container {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    margin: 24px auto;
+    gap: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &__button {
+    width: 100%;
+    max-width: 320px;
+    border: none;
+    border-radius: 4px;
+    color: var(--white);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: var(--primary-dark);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .smart-input__container {
+      width: 100vw;
+      flex-direction: row;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .smart-input__control {
+      max-width: 60%;
+    }
+  }
+
+  &__control {
+    width: 100%;
+    padding: 0.65rem 1rem;
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+
+    &:focus {
+      border-color: var(--primary);
+    }
+
+    &::placeholder {
+      color: var(--gray);
+    }
+  }
+
+  &__clear {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &__clear-icon {
+    font-size: 1.25rem;
+    color: var(--gray);
+  }
+
+  &__error {
+    font-size: 0.75rem;
+    color: var(--red);
+    margin-top: 0.25rem;
+  }
+}
+
+.app-filter {
+  display: flex;
+  gap: 1rem;
+  margin: 0 auto;
+
+  &__buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    gap: 0.5rem;
+    opacity: 1;
+    max-height: calc(1000px - 30px);
+    overflow: hidden;
+    transition:
+      max-height 0.5s ease-in-out,
+      opacity 0.5s ease-in-out;
+  }
+
+  &__buttons.hidden {
+    opacity: 0;
+    max-height: 0;
+    pointer-events: none;
+  }
+
+  &__button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  &__date-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+.app-button {
+  &.active {
+    background-color: var(--primary);
+    color: var(--white);
+  }
+
+  &.inactive {
+    background-color: var(--white);
+    color: var(--gray);
+  }
+}
+
+@media (min-width: 768px) {
+  .app-filter__button-group {
+    max-width: 280px;
+    width: 100%;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  .app-filter__date-group {
+    max-width: 660px;
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-filter__date-group {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        padding: 1rem;
+  }
+
+  .app-filter__button-group {
+    justify-content: center;
+    align-items: center;
+  }
+}

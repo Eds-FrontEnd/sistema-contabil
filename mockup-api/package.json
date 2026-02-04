@@ -1,0 +1,22 @@
+{
+  "name": "api-mock-contabil",
+  "version": "1.0.0",
+  "description": "API Mock para Sistema Contábil - Code Challenge",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node seed.js",
+    "reset": "node seed.js && node server.js"
+  },
+  "keywords": [
+    "mock",
+    "api",
+    "contabil",
+    "json-server"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "json-server": "^0.17.4"
+  }
+}

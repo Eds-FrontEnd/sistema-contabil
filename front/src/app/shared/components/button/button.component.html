@@ -1,0 +1,22 @@
+<button
+  mat-flat-button
+  type="button"
+  [routerLink]="routerLink || null"
+  [disabled]="disabled"
+  [attr.aria-label]="ariaLabel || label"
+  class="button"
+  [style.background-color]="backgroundColor"
+  [style.color]="textColor"
+  (click)="onClick()"
+>
+  <mat-icon
+    *ngIf="icon"
+    class="button-icon"
+    aria-hidden="true"
+    [style.color]="iconColor"
+  >
+    {{ icon }}
+  </mat-icon>
+
+  <span class="button-label">{{ label }}</span>
+</button>

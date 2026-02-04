@@ -1,0 +1,15 @@
+<section
+  aria-label="{{ title }}"
+  class="status-badge"
+  [style.borderColor]="current.color"
+  [style.color]="current.color"
+>
+  <div
+    class="status-badge__pill"
+    role="status"
+    [attr.aria-label]="current.ariaLabel"
+  >
+    <mat-icon aria-hidden="true" class="status-badge__icon">{{ current.icon }}</mat-icon>
+    <span class="status-badge__text">{{ current.text }}</span>
+  </div>
+</section>

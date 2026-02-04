@@ -1,0 +1,28 @@
+.smart-input {
+  width: 100%;
+  max-width: 100%;
+
+  @media (min-width: 768px) {
+    max-width: 28rem;
+  }
+
+  &__label {
+    font-weight: 500;
+  }
+
+  &__control {
+    width: 100%;
+  }
+
+  &__clear {
+    cursor: pointer;
+  }
+
+  &__clear-icon {
+    font-size: 1.25rem;
+  }
+
+  &__error {
+    font-size: 0.75rem;
+  }
+}

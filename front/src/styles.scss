@@ -1,0 +1,52 @@
+@use '@angular/material' as mat;
+@use '../src/app/shared/utils/variables.scss' as *;
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+
+  @media screen and (max-width: 550px) {
+    overflow-x: auto;
+  }
+}
+
+/* Estilo personalizado para o SnackBar */
+.custom-snack-bar {
+  background-color: var(--secondary);
+  color: var(--white);
+  border-radius: 4px;
+  margin: 12px 24px;
+  font-size: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: var(--secondary) !important;
+    color: var(--white);
+  }
+}
+
+.custom-dialog {
+  background-color: var(--secondary);
+  color: var(--white);
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-size: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+

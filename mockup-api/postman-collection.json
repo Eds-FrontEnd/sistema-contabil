@@ -1,0 +1,449 @@
+{
+  "info": {
+    "_postman_id": "sistema-contabil-001",
+    "name": "Sistema Contábil - Code Challenge",
+    "description": "Coleção completa com headers Authorization e Content-Type pré-configurados.\n\n**SETUP:**\n1. Importe o environment 'postman-environment.json'\n2. Selecione o environment 'Sistema Contábil - Local'\n3. Execute o request 'Login' (token será salvo automaticamente)\n4. Teste qualquer endpoint (Authorization já configurado)\n\n**Credenciais:**\n- Email: admin@contabil.com\n- Senha: 123456",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Autenticação",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code é 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    ",
+                  "    pm.test('Resposta contém token', function () {",
+                  "        pm.expect(jsonData).to.have.property('token');",
+                  "        pm.expect(jsonData).to.have.property('user');",
+                  "    });",
+                  "    ",
+                  "    pm.environment.set('token', jsonData.token);",
+                  "    pm.environment.set('user_id', jsonData.user.id);",
+                  "    pm.environment.set('user_email', jsonData.user.email);",
+                  "    ",
+                  "    console.log('✅ Token salvo: ' + jsonData.token);",
+                  "    console.log('👤 Usuário: ' + jsonData.user.nome);",
+                  "} else {",
+                  "    console.log('❌ Falha no login');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@contabil.com\",\n  \"password\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "**Autenticação Mock**\n\nRealiza login e salva o token automaticamente.\n\n✅ Token salvo em: {{token}}\n✅ Headers Authorization configurados automaticamente nos demais requests"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Lançamentos",
+      "item": [
+        {
+          "name": "Listar Lançamentos (Página 1)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code é 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta contém data e pagination', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('data');",
+                  "    pm.expect(jsonData).to.have.property('pagination');",
+                  "});",
+                  "",
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    console.log('📊 Total: ' + jsonData.pagination.total);",
+                  "    console.log('📄 Página: ' + jsonData.pagination.page + '/' + jsonData.pagination.totalPages);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/lancamentos?page=1&limit=50&sort=data&order=desc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "lancamentos"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Número da página"
+                },
+                {
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Itens por página"
+                },
+                {
+                  "key": "sort",
+                  "value": "data",
+                  "description": "Campo de ordenação"
+                },
+                {
+                  "key": "order",
+                  "value": "desc",
+                  "description": "Ordem (asc/desc)"
+                }
+              ]
+            },
+            "description": "Lista lançamentos com paginação server-side.\n\n**Headers:**\n- Authorization: Bearer {{token}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Listar com Filtros",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/lancamentos?tipo=DEBITO&status=CONFIRMADO&search=fornecedor",
+              "host": ["{{base_url}}"],
+              "path": ["api", "lancamentos"],
+              "query": [
+                {
+                  "key": "tipo",
+                  "value": "DEBITO",
+                  "description": "DEBITO, CREDITO ou TODOS"
+                },
+                {
+                  "key": "status",
+                  "value": "CONFIRMADO",
+                  "description": "PROVISORIO, CONFIRMADO, CANCELADO ou TODOS"
+                },
+                {
+                  "key": "search",
+                  "value": "fornecedor",
+                  "description": "Busca no histórico e documento"
+                }
+              ]
+            },
+            "description": "Lista com múltiplos filtros.\n\n**Headers:**\n- Authorization: Bearer {{token}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Listar por Período",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/lancamentos?dataInicio=2026-01-01&dataFim=2026-01-31",
+              "host": ["{{base_url}}"],
+              "path": ["api", "lancamentos"],
+              "query": [
+                {
+                  "key": "dataInicio",
+                  "value": "2026-01-01",
+                  "description": "Data inicial (YYYY-MM-DD)"
+                },
+                {
+                  "key": "dataFim",
+                  "value": "2026-01-31",
+                  "description": "Data final (YYYY-MM-DD)"
+                }
+              ]
+            },
+            "description": "Filtra lançamentos por período.\n\n**Headers:**\n- Authorization: Bearer {{token}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Obter Lançamento por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/lancamentos/000001",
+              "host": ["{{base_url}}"],
+              "path": ["api", "lancamentos", "000001"]
+            },
+            "description": "Busca um lançamento específico pelo ID.\n\n**Headers:**\n- Authorization: Bearer {{token}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Lançamento",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code é 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set('ultimo_lancamento_id', jsonData.id);",
+                  "    console.log('✅ Lançamento criado com ID: ' + jsonData.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": \"2026-01-28\",\n  \"tipo\": \"DEBITO\",\n  \"contaContabil\": {\n    \"codigo\": \"5.1.03.001\",\n    \"descricao\": \"Despesas com Aluguel\"\n  },\n  \"valor\": 3500.00,\n  \"historico\": \"Pagamento de aluguel do mês 01/2026\",\n  \"documento\": \"REC-789012\",\n  \"status\": \"PROVISORIO\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/lancamentos",
+              "host": ["{{base_url}}"],
+              "path": ["api", "lancamentos"]
+            },
+            "description": "Cria um novo lançamento.\n\n**Headers:**\n- Authorization: Bearer {{token}}\n- Content-Type: application/json"
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Lançamento",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": \"2026-01-28\",\n  \"tipo\": \"DEBITO\",\n  \"contaContabil\": {\n    \"codigo\": \"5.1.03.001\",\n    \"descricao\": \"Despesas com Aluguel\"\n  },\n  \"valor\": 3500.00,\n  \"historico\": \"Pagamento de aluguel do mês 01/2026 - CONFIRMADO\",\n  \"documento\": \"REC-789012\",\n  \"status\": \"CONFIRMADO\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/lancamentos/000001",
+              "host": ["{{base_url}}"],
+              "path": ["api", "lancamentos", "000001"]
+            },
+            "description": "Atualiza um lançamento existente.\n\n**Headers:**\n- Authorization: Bearer {{token}}\n- Content-Type: application/json"
+          },
+          "response": []
+        },
+        {
+          "name": "Excluir Lançamento",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/lancamentos/000001",
+              "host": ["{{base_url}}"],
+              "path": ["api", "lancamentos", "000001"]
+            },
+            "description": "Exclui um lançamento.\n\n**Headers:**\n- Authorization: Bearer {{token}}"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Balancete",
+      "item": [
+        {
+          "name": "Obter Balancete Geral",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/lancamentos/balancete",
+              "host": ["{{base_url}}"],
+              "path": ["api", "lancamentos", "balancete"]
+            },
+            "description": "Retorna resumo financeiro completo.\n\n**Headers:**\n- Authorization: Bearer {{token}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Balancete por Período",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/lancamentos/balancete?dataInicio=2026-01-01&dataFim=2026-01-31",
+              "host": ["{{base_url}}"],
+              "path": ["api", "lancamentos", "balancete"],
+              "query": [
+                {
+                  "key": "dataInicio",
+                  "value": "2026-01-01"
+                },
+                {
+                  "key": "dataFim",
+                  "value": "2026-01-31"
+                }
+              ]
+            },
+            "description": "Balancete filtrado por período.\n\n**Headers:**\n- Authorization: Bearer {{token}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Balancete Confirmados",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/lancamentos/balancete?status=CONFIRMADO",
+              "host": ["{{base_url}}"],
+              "path": ["api", "lancamentos", "balancete"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "CONFIRMADO"
+                }
+              ]
+            },
+            "description": "Balancete apenas de lançamentos confirmados.\n\n**Headers:**\n- Authorization: Bearer {{token}}"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Contas Contábeis",
+      "item": [
+        {
+          "name": "Listar Contas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/contas",
+              "host": ["{{base_url}}"],
+              "path": ["api", "contas"]
+            },
+            "description": "Lista todas as contas contábeis disponíveis.\n\n**Headers:**\n- Authorization: Bearer {{token}}"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

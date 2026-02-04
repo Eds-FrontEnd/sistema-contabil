@@ -1,0 +1,14 @@
+<header class="header" role="banner">
+  <!-- Logo e título do sistema -->
+  <span class="header__logo">
+    <app-logo></app-logo>
+    <h1 class="header__title" aria-label="Título do Sistema">{{ title }}</h1>
+  </span>
+
+  <app-button
+    [label]="buttonLabel"
+    [icon]="buttonIcon"
+    [routerLink]="buttonLink"
+    aria-label="Ir para novo lançamento"
+  ></app-button>
+</header>

@@ -1,0 +1,122 @@
+<app-header
+  [title]="'Novo Lançamento - Facilitte'"
+  [buttonLabel]="'Voltar'"
+  [buttonIcon]="'arrow_back'"
+  [buttonLink]="'/'">
+</app-header>
+
+<span class="novo-lancamento__action">
+  <app-button
+    label="Cancelar"
+    icon="close"
+    iconColor="var(--gray)"
+    textColor="var(--gray)"
+    backgroundColor="var(--white)"
+    routerLink="/"
+    ariaLabel="Cancelar e voltar para a tela inicial">
+  </app-button>
+
+  <app-button
+    label="Salvar"
+    icon="save"
+    ariaLabel="Salvar Transação"
+    [disabled]="submitting()"
+    (action)="salvar()">
+  </app-button>
+</span>
+
+<form class="novo-lancamento__page" [formGroup]="form" (ngSubmit)="salvar()">
+  <section class="novo-lancamento__card">
+    <div class="novo-lancamento__grid">
+
+      <!-- DATE -->
+      <app-date-picker
+        class="novo-lancamento__field date-picker"
+        aria-label="Data">
+      </app-date-picker>
+
+      <!-- TIPO -->
+      <fieldset class="novo-lancamento__field novo-lancamento__radios">
+        <legend class="novo-lancamento__field-label">Tipo de Lançamento *</legend>
+        <label>
+          <input type="radio" value="debito" formControlName="tipo" />
+          Débito
+        </label>
+        <label>
+          <input type="radio" value="credito" formControlName="tipo" />
+          Crédito
+        </label>
+        <mat-error *ngIf="form.get('tipo')?.invalid && form.get('tipo')?.touched" class="novo-lancamento__field-error">
+          Campo obrigatório
+        </mat-error>
+      </fieldset>
+
+      <!-- CONTA CONTÁBIL -->
+      <div class="novo-lancamento__field">
+        <mat-form-field
+          appearance="outline"
+          class="w-100"
+          [ngClass]="{'mat-form-field-invalid': form.get('contaDebito')?.invalid && form.get('contaDebito')?.touched}">
+          <mat-label>Conta Contábil *</mat-label>
+          <mat-select formControlName="contaDebito">
+            <mat-option *ngFor="let conta of contasContabeis()" [value]="conta" style="background-color: var(--white);">
+              {{ conta }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('contaDebito')?.invalid && form.get('contaDebito')?.touched" class="novo-lancamento__field-error">
+            Campo obrigatório
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- VALOR -->
+      <div class="novo-lancamento__field">
+        <mat-form-field
+          appearance="outline"
+          class="w-100"
+          [ngClass]="{'mat-form-field-invalid': form.get('valor')?.invalid && form.get('valor')?.touched}">
+          <mat-label>Valor *</mat-label>
+          <input matInput formControlName="valor" placeholder="Digite um valor" style="padding: 0 16px"/>
+          <mat-error *ngIf="form.get('valor')?.invalid && form.get('valor')?.touched" class="novo-lancamento__field-error">
+            Campo obrigatório
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARD 2 -->
+  <section class="novo-lancamento__card">
+    <div class="novo-lancamento__field">
+      <mat-form-field
+        appearance="outline"
+        class="w-100"
+        [ngClass]="{'mat-form-field-invalid': form.get('historico')?.invalid && form.get('historico')?.touched}">
+        <mat-label>Histórico *</mat-label>
+        <textarea matInput formControlName="historico" rows="3" placeholder="Descreva o lançamento..." tyle="padding: 0 16px"></textarea>
+        <mat-error *ngIf="form.get('historico')?.invalid && form.get('historico')?.touched" class="novo-lancamento__field-error">
+          Campo obrigatório
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="novo-lancamento__grid novo-lancamento__grid--actions">
+      <div class="novo-lancamento__field">
+        <label class="novo-lancamento__field-label" for="documento">Documento</label>
+        <input class="novo-lancamento__field-input" id="documento" type="file" />
+      </div>
+
+      <div class="novo-lancamento__field">
+        <label class="novo-lancamento__field-label" for="status">Status *</label>
+        <select class="novo-lancamento__field-input" id="status" formControlName="status">
+          <option value="">Escolha um status...</option>
+          <option value="Provisório">Provisório</option>
+          <option value="Confirmado">Confirmado</option>
+        </select>
+        <mat-error *ngIf="form.get('status')?.invalid && form.get('status')?.touched" class="novo-lancamento__field-error">
+          Campo obrigatório
+        </mat-error>
+      </div>
+    </div>
+  </section>
+</form>

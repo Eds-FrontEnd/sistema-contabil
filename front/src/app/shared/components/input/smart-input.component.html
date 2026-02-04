@@ -1,0 +1,31 @@
+<mat-form-field appearance="outline" class="smart-input" role="group">
+  <mat-label class="smart-input__label">{{ placeholder }}</mat-label>
+
+  <input
+    matInput
+    class="smart-input__control"
+    [type]="type"
+    [(ngModel)]="control.value"
+    [formControl]="control"
+    [attr.aria-invalid]="control.invalid"
+    [attr.aria-describedby]="control.invalid ? 'smart-input__error' : null"
+    (input)="onInput($event)"
+    [placeholder]="placeholder"
+  />
+
+  <button
+    *ngIf="control.value"
+    mat-icon-button
+    matSuffix
+    type="button"
+    class="smart-input__clear"
+    aria-label="Limpar campo"
+    (click)="clear()"
+  >
+    <mat-icon class="smart-input__clear-icon">{{ clearIcon }}</mat-icon>
+  </button>
+
+  <mat-error *ngIf="control.invalid && control.touched" id="smart-input__error" class="smart-input__error">
+    {{ errorMessage }}
+  </mat-error>
+</mat-form-field>

@@ -1,0 +1,40 @@
+<section class="app-filter__container">
+  <div class="smart-input">
+    <span class="smart-input__container">
+      <input id="searchInput" type="text" placeholder="Pesquisar..." [(ngModel)]="searchText" (input)="onSearchChange()"
+        class="smart-input__control app-filter__search" aria-label="Pesquisar por transações" />
+      <app-button label="Filtros Avançados" icon="filter_alt" (click)="toggleButtons()"></app-button>
+    </span>
+
+    @if (searchText) {
+    <span class="smart-input__clear">
+      <mat-icon class="smart-input__clear-icon" (click)="searchText = ''">close</mat-icon>
+    </span>
+    }
+
+  </div>
+
+  <div class="app-filter__buttons" [ngClass]="{ 'hidden': !isFilterVisible }">
+    <div class="app-filter__button-group">
+      <app-button label="Todos" [attr.aria-pressed]="typeFilter === 'todos'" (click)="onTypeChange('todos')"
+        [textColor]="getButtonTextColor('todos')" [backgroundColor]="getButtonBackgroundColor('todos')">
+      </app-button>
+
+      <app-button label="Crédito" [attr.aria-pressed]="typeFilter === 'credito'" (click)="onTypeChange('credito')"
+        [textColor]="getButtonTextColor('credito')" [backgroundColor]="getButtonBackgroundColor('credito')">
+      </app-button>
+
+      <app-button label="Débito" [attr.aria-pressed]="typeFilter === 'debito'" (click)="onTypeChange('debito')"
+        [textColor]="getButtonTextColor('debito')" [backgroundColor]="getButtonBackgroundColor('debito')">
+      </app-button>
+    </div>
+
+    <div class="app-filter__date-group">
+      <app-date-picker class="app-filter__date" title="Data Início" (dateChange)="onStartDateChange($event)"
+        aria-label="Data de início">
+      </app-date-picker>
+      <app-date-picker class="app-filter__date" title="Data Fim" (dateChange)="onEndDateChange($event)"
+        aria-label="Data de fim"></app-date-picker>
+    </div>
+  </div>
+</section>

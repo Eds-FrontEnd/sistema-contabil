@@ -1,0 +1,64 @@
+/* Contêiner da Tabela */
+.table-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  overflow-x: auto;  /* Só ativar a rolagem quando necessário */
+}
+
+.table-transactions {
+  width: 100%;  /* Tabela ocupa 100% da largura disponível */
+  max-width: 100%;  /* Impede que ultrapasse a tela */
+  margin-top: 1rem;
+  border-collapse: collapse;
+}
+
+.table-transactions th, .table-transactions td {
+  text-align: center;
+  padding: 8px 16px;
+}
+
+.table-transactions__action {
+  width: 32px;
+  height: 32px;
+
+  &--edit mat-icon {
+    color: var(--primary);
+  }
+
+  &--delete mat-icon {
+    color: var(--gray);
+  }
+}
+
+/* Efeito de hover nas linhas da tabela */
+.table-row:hover {
+  background-color: var(--gray-light);  /* Cor cinza claro quando passar o mouse */
+}
+
+/* Ajustes para telas maiores que 768px */
+@media (min-width: 768px) {
+  .table-container {
+    overflow-x: hidden;  /* Impede a barra de rolagem horizontal */
+  }
+}
+
+/* Ajustes para telas menores que 768px (mobile) */
+@media (max-width: 767px) {
+  .table-container {
+    overflow-x: auto;  /* Permite rolar horizontalmente em telas menores */
+  }
+  .table-transactions th, .table-transactions td {
+    padding: 6px 8px;  /* Reduz o padding em telas pequenas para melhorar a visualização */
+  }
+}
+
+.no-results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  color: var(--gray);
+}

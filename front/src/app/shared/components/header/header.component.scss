@@ -1,0 +1,36 @@
+.header {
+  width: calc(100% - 64px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 16px 32px;
+  flex-wrap: wrap;
+  gap: 1rem;
+  z-index: 0;
+
+  &__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__title {
+    font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+    font-weight: 700;
+    line-height: 1.2;
+
+    @media screen and (max-width: 625px) {
+      text-align: center; /* Alinha o título ao centro em telas pequenas */
+    }
+
+    @media screen and (max-width: 430px) {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 625px) {
+    min-width: 248px;
+    justify-content: center;
+  }
+}

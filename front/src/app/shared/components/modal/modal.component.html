@@ -1,0 +1,26 @@
+<section>
+  <h2 mat-dialog-title>{{ data.title }}</h2>
+
+  <div mat-dialog-content>
+    @if (data.message) {
+    <p>{{ data.message }}</p>
+    }
+
+    @if (data.transaction) {
+    <hr />
+    <p><strong>Conta:</strong> {{ data.transaction.conta }}</p>
+    }
+  </div>
+
+  <div mat-dialog-actions>
+    @if (data.isConfirm) {
+    <button mat-button (click)="onCancel()">
+      {{ data.cancelButtonText ?? 'Cancelar' }}
+    </button>
+    }
+
+    <button mat-raised-button color="primary" (click)="onConfirm()">
+      {{ data.confirmButtonText ?? 'Ok' }}
+    </button>
+  </div>
+</section>

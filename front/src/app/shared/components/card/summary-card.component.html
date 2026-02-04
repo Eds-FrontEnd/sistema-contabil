@@ -1,0 +1,17 @@
+<mat-card class="summary-card">
+  <header class="summary-card__header">
+    <h2 class="summary-card__title">{{ title }}</h2>
+    <mat-icon
+      class="summary-card__icon"
+      [ngStyle]="{ color: iconColor }"
+      [attr.aria-label]="iconAriaLabel">
+      {{ icon }}
+    </mat-icon>
+  </header>
+
+  <div class="summary-card__content">
+    <span class="summary-card__value">
+      {{ formattedValue }}
+    </span>
+  </div>
+</mat-card>

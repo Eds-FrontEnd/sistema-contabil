@@ -1,0 +1,10 @@
+<app-header
+  [title]="'Facilitte - Sistema Contábil'"
+  [buttonLabel]="'Novo Lançamento'"
+  [buttonIcon]="'add'"
+  [buttonLink]="'/novo-lancamento'"
+></app-header>
+
+<app-balance></app-balance>
+
+<app-table-transactions [transactions]="transactions"></app-table-transactions>
