@@ -1,5 +1,4 @@
-# ⚡ Projeto – Modernização de Lançamentos Contábeis (Angular)
-
+# ⚡ Projeto – Sistema Contábil
 ## 🚀 Visão Geral
 
  **Aplicação Angular moderna, intuitiva, responsiva e escalável**, 
