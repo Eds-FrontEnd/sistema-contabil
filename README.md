@@ -102,3 +102,15 @@ npm install
 ```bash
 npm start
 ````
+## Rodar FRONT ##
+
+- Instale o pacote de dependências com o comando:
+
+```bash
+npm install
+````
+- E rode com o comando:
+
+```bash
+ng serve
+````
